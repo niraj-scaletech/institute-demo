@@ -6,20 +6,14 @@ const migrationFolder = path.join(__dirname, '../migrations/**/*.{ts,js}');
 
 export const ormConfig: DataSourceOptions = {
   type: 'postgres',
-  replication: {
-    master: {
-      host: process.env.HOST || 'localhost',
-      port: +process.env.PORT || 5432,
-      password: process.env.PASSWORD || 'admin',
-      username: process.env.USERNAME || 'postgres',
-      database: process.env.DATABASE || 'demo',
-    },
-    slaves: [],
-  },
+  host: process.env.DB_HOST || 'localhost',
+  port: +process.env.DB_PORT || 5432,
+  password: process.env.DB_PASSWORD || 'admin',
+  username: process.env.DB_USERNAME || 'postgres',
+  database: process.env.DB_DATABASE || 'demo',
   entities: [entityFolder],
   migrations: [migrationFolder],
   migrationsTableName: 'migrations',
-  logging: true,
 };
 
 export const AppDataSource = new DataSource(ormConfig);

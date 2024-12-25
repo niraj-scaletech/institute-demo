@@ -1,12 +1,12 @@
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { Base } from './base';
 import { UserEntity } from './user.entity';
 
 @Entity('user_institute')
 export class UserInstituteEntity extends Base {
-  @OneToOne(() => UserEntity, (user) => user.id)
+  @ManyToOne(() => UserEntity, (user) => user.userInstitute, { cascade: true })
   @JoinColumn({ name: 'user_id' })
-  user: UserEntity;
+  user!: UserEntity;
 
   @Column({ type: 'varchar', length: 64 })
   institute: string;
@@ -18,11 +18,11 @@ export class UserInstituteEntity extends Base {
   medium: string;
 
   @Column({ type: 'varchar', length: 64 })
-  class: string;
+  class_name: string;
 
   @Column({ type: 'varchar', length: 64 })
   standard: string;
 
-  @Column({ type: 'array' })
+  @Column({ type: 'varchar', array: true })
   subjects: string[];
 }
